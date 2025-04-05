@@ -23,7 +23,7 @@ function MainPage() {
     // Task 3: Format timestamp
     const formatDate = (timestamp) => {
         // Write your code below this line
-        return new Date(timestamp).toLocaleDateString()
+        return new Date(timestamp * 1000).toLocaleDateString("en-us")
       };
 
     const getConditionClass = (condition) => {
@@ -38,7 +38,7 @@ function MainPage() {
                         <div className="card product-card">
 
                             {/* // Task 4: Display gift image or placeholder */}
-                            <img className='card-img-top' src={gift.image} />
+                            <img className='card-img-top' style={{height: '200px', objectFit: 'cover'}} src={gift.image} alt={gift.name} />
 
                             <div className="card-body">
 
