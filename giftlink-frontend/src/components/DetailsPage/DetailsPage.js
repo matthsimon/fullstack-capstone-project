@@ -14,7 +14,7 @@ function DetailsPage() {
         const authenticationToken = sessionStorage.getItem('auth-token');
         if (!authenticationToken) {
 			// Task 1: Check for authentication and redirect
-            navigate("/app/login");
+            //navigate("/app/login");
         }
 
         // get the gift to be rendered on the details page
@@ -44,7 +44,7 @@ function DetailsPage() {
 
     const handleBackClick = () => {
 		// Task 4: Handle back click
-		navigate("/app/gifts");
+		navigate(-1);
 	};
 
 	//The comments have been hardcoded for this project.
@@ -91,16 +91,16 @@ return (
                             <div className="no-image-available-large">No Image Available</div>
                         )}
                     </div>
-                    	<p><strong>Category:</strong>{gift.category}</p>
-                    	<p><strong>Condition:</strong>{gift.condition}</p>
-                    	<p><strong>Date Added:</strong>{new Date(gift.date_added * 1000).toLocaleDateString()}</p>
-                    	<p><strong>Age (Years):</strong>{gift.age}</p>
-                    	<p><strong>Description:</strong>{gift.description}</p>
+                    	<p><strong>Category:</strong> {gift.category}</p>
+                    	<p><strong>Condition:</strong> {gift.condition}</p>
+                    	<p><strong>Date Added:</strong> {new Date(gift.date_added * 1000).toLocaleDateString()}</p>
+                    	<p><strong>Age (Years):</strong> {gift.age_years}</p>
+                    	<p><strong>Description:</strong> {gift.description}</p>
                 </div>
             </div>
             <div className="comments-section mt-4">
                 <h3 className="mb-3">Comments</h3>
-				{comments.forEach((index, comment) => (
+				{comments.map((comment, index) => (
                     <div key={index} className="card mb-3">
                         <div className="card-body">
                             <p className="comment-author"><strong>{comment.author}:</strong></p>

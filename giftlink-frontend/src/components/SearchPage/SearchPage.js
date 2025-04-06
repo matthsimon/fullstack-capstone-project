@@ -40,8 +40,8 @@ function SearchPage() {
         const queryParams = new URLSearchParams({
             name: searchQuery,
             age_years: ageRange,
-            category: document.getElementById('category'),
-            condition: document.getElementById('condition'),
+            category: document.getElementById('category').value,
+            condition: document.getElementById('condition').value,
         }).toString();
 
         fetch(`${baseUrl}${queryParams}`)
@@ -71,16 +71,16 @@ function SearchPage() {
                         <div className="d-flex flex-column">
                             <label htmlFor='category'>Category</label>
                             <select id='category' className='form-control'>
-                                <option value="">All</option>
+                                <option key="all" value="">All</option>
                                 {(categories.map((category) => (
-                                    <option value={category}>{category}</option>
+                                    <option key={category} value={category}>{category}</option>
                                 )))}
                             </select>
                             <label htmlFor='condition'>Condition</label>
                             <select id='condition' className='form-control'>
-                                <option value="">All</option>
+                                <option key="all" value="">All</option>
                                 {(conditions.map((condition) => (
-                                    <option value={condition}>{condition}</option>
+                                    <option key={condition} value={condition}>{condition}</option>
                                 )))}
                             </select>
                             <label htmlFor="ageRange">Less than {ageRange} years</label>
@@ -90,33 +90,31 @@ function SearchPage() {
                     </div>
                     {/* Task 7: Add text input field for search criteria*/}
                     <input type='text' placeholder='Search for items...' name='query' className='form-control'
-                        value={searchQuery} onChange={(e) => setSearchQuery(e.target.query)} />
+                        value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
                     {/* Task 8: Implement search button with onClick event to trigger search:*/}
                     <button className='btn btn-primary' onClick={handleSearch}>Search</button>
                     {/*Task 5: Display search results and handle empty results with a message. */}
-                    <div className="container mb-5">
+                    {searchResults.length > 0 ? (searchResults.map((gift) => (
                         <div className="row">
-                            {searchResults.length > 0 ? (searchResults.map((gift) => (
-                                <div key={gift.id} className="col-md-4 mb-4">
-                                    <div className="card product-card">
-                                        <img className='card-img-top' style={{height: '200px', objectFit: 'cover'}} src={gift.image} alt={gift.name} />
+                            <div key={gift.id} className="col-md-12">
+                                <div className="card product-card">
+                                    <img className='card-img-top' style={{height: '200px', objectFit: 'cover'}} src={gift.image} alt={gift.name} />
 
-                                        <div className="card-body">
-                                            <h5 className="card-title">{gift.name}</h5>
-                                            <p className="card-text">{gift.description.slice(0, 100) + "..."}</p>
-                                            <button onClick={() => goToDetailsPage(gift.id)} className="btn btn-primary">
-                                                View More
-                                            </button>
-                                        </div>
+                                    <div className="card-body">
+                                        <h5 className="card-title">{gift.name}</h5>
+                                        <p className="card-text">{gift.description.slice(0, 100) + "..."}</p>
+                                        <button onClick={() => goToDetailsPage(gift.id)} className="btn btn-primary">
+                                            View More
+                                        </button>
                                     </div>
                                 </div>
-                            ))) : (
-                                <div className='alert alert-info' role='alert'>
-                                    No product found.
-                                </div>
-                            )}
+                            </div>
                         </div>
-                    </div>
+                    ))) : (
+                        <div className='mt-2 alert alert-info' role='alert'>
+                            No product found.
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
