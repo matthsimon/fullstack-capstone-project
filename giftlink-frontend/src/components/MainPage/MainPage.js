@@ -8,7 +8,16 @@ function MainPage() {
 
     useEffect(() => {
         // Task 1: Write async fetch operation
-        const fetchGifts = async () => fetch(urlConfig.backendUrl + "/api/gifts").then(r => r.json());
+        const fetchGifts = async () => {
+            return fetch(`${urlConfig.backendUrl}/api/gifts`)
+                .then(r => {
+                    if (!r.ok) {
+                        throw new Error("Fetch failed")
+                    }
+                    return r;
+                })
+                .then(r => r.json());
+        }
         fetchGifts()
             .then(data => setGifts(data))
             .catch(console.error);
