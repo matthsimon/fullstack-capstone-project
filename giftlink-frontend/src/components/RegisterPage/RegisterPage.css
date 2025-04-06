@@ -1,0 +1,12 @@
+h2 {
+    font-weight: bold;
+}
+
+.form-group {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.btn-primary {
+    margin-top: 10px;
+}
