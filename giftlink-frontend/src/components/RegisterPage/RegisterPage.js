@@ -1,4 +1,8 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import urlConfig from '../../config';
+import useAppContext from '../../context/AuthContext';
 
 import './RegisterPage.css';
 
@@ -9,10 +13,38 @@ function RegisterPage() {
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [errorMsg, setErrorMsg] = useState("");
+
+    const navigate = useNavigate();
+    const { setIsLoggedIn } = useAppContext();
 
     // insert code here to create handleRegister function and include console.log
     const handleRegister = () => {
-        console.log("Register");
+        fetch(`${urlConfig.backendUrl}/api/auth/register`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                password: password
+            })
+        }).then(resp => {
+            if (!resp.ok) throw new Error('Failed to register');
+            return resp.json();
+        })
+        .then(data => {
+            sessionStorage.setItem('email', data.email);
+            sessionStorage.setItem('name', firstName);
+            sessionStorage.setItem('token', data.authtoken);
+            setIsLoggedIn(true);
+            navigate('/app');
+        })
+        .catch(err => {
+            setErrorMsg(err);
+        });
     };
 
 
@@ -22,6 +54,9 @@ function RegisterPage() {
             <div className="col-md-6 col-lg-4">
                 <div className="register-card p-4 border rounded">
                     <h2 className="text-center mb-4 font-weight-bold">Register</h2>
+                    { errorMsg && (
+                        <div className='alert alert-danger'>{errorMsg}</div>
+                    )}
                     <form>
                         <div className="form-group mt-2 mb-2">
                             <label htmlFor="firstName">First Name</label>
