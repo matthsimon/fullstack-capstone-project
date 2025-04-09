@@ -2,7 +2,10 @@
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Pino = require('pino');
+const { body } = require('express-validator');
+
 const connectToDatabase = require('../models/db');
+const { ReturnDocument } = require('mongodb');
 
 //Step 1 - Task 3: Create a Pino logger instance
 const logger = Pino()
@@ -72,7 +75,7 @@ router.post('/login', async (req, res) => {
         }
 
         // Task 6: Create JWT authentication if passwords match with user._id as payload
-        const authtoken = jwt.sign({"id": result.insertedId}, JWT_SECRET, {"expiresIn": "1h"});
+        const authtoken = jwt.sign({"id": user._id}, JWT_SECRET, {"expiresIn": "1h"});
         res.json({
             authtoken,
             'firstName': user.firstName,
@@ -80,6 +83,40 @@ router.post('/login', async (req, res) => {
         });
     } catch (e) {
          return res.status(500).send('Internal server error');
+
+    }
+});
+
+router.put('/update',
+    body('email').notEmpty().isEmail().withMessage('Invalid email format'),
+    body('name').notEmpty().isAlpha().withMessage('Name is required'),
+    async (req, res) => {
+    // Task 2: Validate the input using `validationResult` and return approiate message if there is an error.
+    try {
+        // Task 3: Check if `email` is present in the header and throw an appropriate error message if not present.
+        // Task 4: Connect to MongoDB
+        const db = await connectToDatabase();
+        const coll = db.collection('users');
+        // Task 5: find user credentials in database
+        // Task 6: update user credentials in database
+        const user = await coll.findOneAndUpdate(
+            { email: req.body.email },
+            { $set: {
+                fistName: req.body.name,
+                updatedAt: new Date(),
+            }},
+            {returnDocument: ReturnDocument.AFTER}
+        );
+
+        if (!user) {
+            return res.status(404).send("User not found");
+        }
+
+        // Task 7: create JWT authentication using secret key from .env file
+        const authtoken = jwt.sign({"id": user._id}, JWT_SECRET, {"expiresIn": "1h"});
+        res.json({authtoken});
+    } catch (e) {
+        return res.status(500).send('Internal server error');
 
     }
 });
