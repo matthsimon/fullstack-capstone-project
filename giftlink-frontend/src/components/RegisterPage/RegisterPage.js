@@ -19,7 +19,8 @@ function RegisterPage() {
     const { setIsLoggedIn } = useAppContext();
 
     // insert code here to create handleRegister function and include console.log
-    const handleRegister = () => {
+    const handleRegister = async (e) => {
+        e.preventDefault();
         fetch(`${urlConfig.backendUrl}/api/auth/register`, {
             method: 'POST',
             headers: {
