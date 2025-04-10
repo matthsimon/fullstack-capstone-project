@@ -108,8 +108,8 @@ router.post('/login',
 });
 
 router.put('/update',
-    body('email').notEmpty().isEmail().withMessage('Invalid email format'),
-    body('name').notEmpty().isAlpha().withMessage('Name is required'),
+    body('email').notEmpty().withMessage('Email is required').isEmail().withMessage('Invalid email format'),
+    body('name').notEmpty().withMessage('Name is required'),
     async (req, res) => {
     // Task 2: Validate the input using `validationResult` and return approiate message if there is an error.
     const errors = validationResult(req);

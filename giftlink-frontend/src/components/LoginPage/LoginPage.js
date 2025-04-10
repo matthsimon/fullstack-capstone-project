@@ -76,7 +76,7 @@ function LoginPage() {
                         <input id='password' placeholder='Enter your password' type='password' className='form-control'
                             value={password} onChange={(e) => setPassword(e.target.value)} />
                     </div>
-                    <button className='btn btn-primary' onClick={handleLogin}>Log in</button>
+                    <button className='btn btn-primary mt-4' onClick={handleLogin}>Log in</button>
                 </form>
                 <p className="mt-4 text-center">
                     New here? <a href="/app/register" className="text-primary">Register Here</a>

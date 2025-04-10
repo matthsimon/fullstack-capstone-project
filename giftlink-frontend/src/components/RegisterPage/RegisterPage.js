@@ -44,7 +44,8 @@ function RegisterPage() {
             navigate('/app');
         })
         .catch(err => {
-            setErrorMsg(err);
+            console.error(err);
+            setErrorMsg(err.message);
         });
     };
 

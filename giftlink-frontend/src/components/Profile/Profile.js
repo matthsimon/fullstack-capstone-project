@@ -13,7 +13,7 @@ const Profile = () => {
  const [editMode, setEditMode] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
-    const authtoken = sessionStorage.getItem("auth-token");
+    const authtoken = sessionStorage.getItem("token");
     if (!authtoken) {
       navigate("/app/login");
     } else {
@@ -23,7 +23,7 @@ const Profile = () => {
 
   const fetchUserProfile = async () => {
     try {
-      const authtoken = sessionStorage.getItem("auth-token");
+      const authtoken = sessionStorage.getItem("token");
       const email = sessionStorage.getItem("email");
       const name=sessionStorage.getItem('name');
       if (name || authtoken) {
@@ -55,7 +55,7 @@ const handleSubmit = async (e) => {
   e.preventDefault();
 
   try {
-    const authtoken = sessionStorage.getItem("auth-token");
+    const authtoken = sessionStorage.getItem("token");
     const email = sessionStorage.getItem("email");
 
     if (!authtoken || !email) {
@@ -69,13 +69,11 @@ const handleSubmit = async (e) => {
       method: 'PUT',
       //Step 1: Task 2
       headers: {
+        'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + authtoken,
       },
       //Step 1: Task 3
-      body: {
-        email,
-        name: updatedDetails.name,
-      }
+      body: JSON.stringify(payload)
     });
 
     if (response.ok) {
@@ -91,7 +89,7 @@ const handleSubmit = async (e) => {
       setTimeout(() => {
         setChanged("");
         navigate("/");
-      }, 1000);
+      }, 5000);
 
     } else {
       // Handle error case
