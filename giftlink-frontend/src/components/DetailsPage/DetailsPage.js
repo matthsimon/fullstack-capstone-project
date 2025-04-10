@@ -11,10 +11,10 @@ function DetailsPage() {
     const [error, setError] = useState(null);
 
 	useEffect(() => {
-        const authenticationToken = sessionStorage.getItem('auth-token');
+        const authenticationToken = sessionStorage.getItem('token');
         if (!authenticationToken) {
 			// Task 1: Check for authentication and redirect
-            //navigate("/app/login");
+            navigate("/app/login");
         }
 
         // get the gift to be rendered on the details page
@@ -39,7 +39,7 @@ function DetailsPage() {
 		// Task 3: Scroll to top on component mount
 		window.scrollTo(0, 0);
 
-    }, [productId]);
+    }, [productId, navigate]);
 
 
     const handleBackClick = () => {

@@ -33,6 +33,7 @@ function RegisterPage() {
                 password: password
             })
         }).then(resp => {
+            if (resp.status === 409) throw new Error('User already exists');
             if (!resp.ok) throw new Error('Failed to register');
             return resp.json();
         })
