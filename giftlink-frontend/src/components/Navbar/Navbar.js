@@ -37,7 +37,7 @@ export default function Navbar() {
                 <span className="navbar-toggler-icon"></span>
             </button>
 
-            <div className="collapse navbar-collapse" id="navbarNav">
+            <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul className="navbar-nav">
                     {/* Task 1: Add links to Home and Gifts below*/}
                     <li className="nav-item"><a className='nav-link' href="/home.html">Home</a></li>

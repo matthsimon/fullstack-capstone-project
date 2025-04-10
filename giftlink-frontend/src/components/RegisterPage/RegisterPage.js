@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import urlConfig from '../../config';
-import useAppContext from '../../context/AuthContext';
+import { urlConfig } from '../../config';
+import { useAppContext } from '../../context/AuthContext';
 
 import './RegisterPage.css';
 

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import urlConfig from '../../config';
-import { useAuthContext } from '../../context/AuthContext';
+import { urlConfig } from '../../config';
+import { useAppContext } from '../../context/AuthContext';
 
 import './LoginPage.css';
 
@@ -13,7 +13,7 @@ function LoginPage() {
     const [wrongPassword, setWrongPassword] = useState(false);
 
     const navigate = useNavigate();
-    const { setIsLoggedIn } = useAuthContext();
+    const { setIsLoggedIn } = useAppContext();
 
     useEffect(() => {
       if (sessionStorage.getItem('token')) {

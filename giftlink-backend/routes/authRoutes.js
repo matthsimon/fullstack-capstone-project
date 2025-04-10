@@ -1,5 +1,6 @@
 //Step 1 - Task 2: Import necessary packages
 const bcryptjs = require('bcryptjs');
+const dotenv = require('dotenv');
 const jwt = require('jsonwebtoken');
 const Pino = require('pino');
 const { body } = require('express-validator');
